@@ -41,20 +41,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -318,16 +310,12 @@
   <Import Project="$(ReSharperSdkTools)\PsiGen\CsLex.Targets" />-->
   <Target Name="BeforeBuild">
     <MakeDir Directories="$(MSBuildProjectDirectory)\obj" />
-    <Copy SourceFiles="..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\PsiGen\Unicode.lex" 
-          DestinationFolder="$(MSBuildProjectDirectory)\obj" 
-          Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\PsiGen\Unicode.lex')" />
+    <Copy SourceFiles="..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\PsiGen\Unicode.lex" DestinationFolder="$(MSBuildProjectDirectory)\obj" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\PsiGen\Unicode.lex')" />
   </Target>
   <PropertyGroup>
     <ParserGenOutputBase>$(MSBuildProjectDirectory)\Gen</ParserGenOutputBase>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\MSBuild\JetBrains.Build.Common.Targets" 
-          Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\MSBuild\JetBrains.Build.Common.Targets')" />
-  <Import Project="..\packages\JetBrains.ReSharper.SDK.8.2.1158\build\JetBrains.ReSharper.SDK.Targets" 
-          Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\build\JetBrains.ReSharper.SDK.Targets')" />
+  <Import Project="..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\MSBuild\JetBrains.Build.Common.Targets" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\tools\MSBuild\JetBrains.Build.Common.Targets')" />
+  <Import Project="..\packages\JetBrains.ReSharper.SDK.8.2.1158\build\JetBrains.ReSharper.SDK.Targets" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.2.1158\build\JetBrains.ReSharper.SDK.Targets')" />
 </Project>
