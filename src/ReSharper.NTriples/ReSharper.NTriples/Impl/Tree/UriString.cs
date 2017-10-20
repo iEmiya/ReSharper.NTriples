@@ -22,7 +22,7 @@ namespace ReSharper.NTriples.Impl.Tree
     {
         private NTriplesUriStringReference myUriStringReference;
 
-        public bool CaseSensistiveName
+        public bool CaseSensitiveName
         {
             get
             {

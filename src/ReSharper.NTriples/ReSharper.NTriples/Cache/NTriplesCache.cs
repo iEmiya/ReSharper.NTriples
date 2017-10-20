@@ -10,15 +10,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Application;
+using JetBrains.Application.Threading;
 using JetBrains.DataFlow;
-using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
 using JetBrains.Util;
-using ReSharper.NTriples.Impl;
-using ReSharper.NTriples.Resolve;
-using ReSharper.NTriples.Tree;
 
 namespace ReSharper.NTriples.Cache
 {

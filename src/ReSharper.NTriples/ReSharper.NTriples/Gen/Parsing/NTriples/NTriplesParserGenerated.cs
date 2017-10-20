@@ -43,10 +43,10 @@ namespace ReSharper.NTriples.Parsing {
         throw new JetBrains.ReSharper.Psi.Parsing.UnexpectedToken (ReSharper.NTriples.Parsing.ParserMessages.GetExpectedMessage(tokenType.ToString()));
         throw new JetBrains.ReSharper.Psi.Parsing.UnexpectedToken (ReSharper.NTriples.Parsing.ParserMessages.GetExpectedMessage(tokenRepr));
       }
-      return createToken();
+      return CreateToken();
     }
     protected void skip(CompositeElement parent) {
-      parent.AppendNewChild (createToken());
+      parent.AppendNewChild (CreateToken());
     }
     public virtual JetBrains.ReSharper.Psi.ExtensionsAPI.Tree.TreeElement parseNTriplesFile () {
       JetBrains.ReSharper.Psi.Parsing.TokenNodeType tokenType;

@@ -57,7 +57,7 @@ namespace ReSharper.NTriples.Resolve
             this.info = info;
         }
 
-        public bool CaseSensistiveName
+        public bool CaseSensitiveName
         {
             get
             {

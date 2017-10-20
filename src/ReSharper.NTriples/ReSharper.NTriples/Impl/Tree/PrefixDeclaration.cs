@@ -19,7 +19,7 @@ namespace ReSharper.NTriples.Impl.Tree
 {
     internal partial class PrefixDeclaration : IDeclaredElement
     {
-        public bool CaseSensistiveName
+        public bool CaseSensitiveName
         {
             get
             {

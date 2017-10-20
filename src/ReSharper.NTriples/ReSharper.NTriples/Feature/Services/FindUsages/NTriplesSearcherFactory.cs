@@ -50,7 +50,7 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
             return null;
         }
 
-        public IDomainSpecificSearcher CreateLateBoundReferenceSearcher(ICollection<IDeclaredElement> elements)
+        public IDomainSpecificSearcher CreateLateBoundReferenceSearcher(IDeclaredElementsSet elements)
         {
             return new NTriplesReferenceSearcher(this, elements, true);
         }
@@ -60,17 +60,17 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
             return null;
         }
 
-        public IDomainSpecificSearcher CreateReferenceSearcher(ICollection<IDeclaredElement> elements, bool findCandidates)
+        public IDomainSpecificSearcher CreateReferenceSearcher(IDeclaredElementsSet elements, bool findCandidates)
         {
             return new NTriplesReferenceSearcher(this, elements, false);
         }
 
-        public IDomainSpecificSearcher CreateTextOccurenceSearcher(ICollection<IDeclaredElement> elements)
+        public IDomainSpecificSearcher CreateTextOccurrenceSearcher(IDeclaredElementsSet elements)
         {
             return null;
         }
 
-        public IDomainSpecificSearcher CreateTextOccurenceSearcher(string subject)
+        public IDomainSpecificSearcher CreateTextOccurrenceSearcher(string subject)
         {
             return null;
         }
@@ -107,18 +107,18 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
             return this.mySearchDomainFactory.CreateSearchDomain(declaredElement.GetSolution(), false);
         }
 
-        public JetTuple<ICollection<IDeclaredElement>, Predicate<IFindResultReference>, bool> GetDerivedFindRequest(
+        public Tuple<ICollection<IDeclaredElement>, Predicate<IFindResultReference>, bool> GetDerivedFindRequest(
             IFindResultReference result)
         {
             return null;
         }
 
-        public JetTuple<ICollection<IDeclaredElement>, bool> GetNavigateToTargets(IDeclaredElement element)
+        public Tuple<ICollection<IDeclaredElement>, bool> GetNavigateToTargets(IDeclaredElement element)
         {
             return null;
         }
 
-        public IEnumerable<Pair<IDeclaredElement, Predicate<FindResult>>> GetRelatedDeclaredElements(IDeclaredElement element)
+        public IEnumerable<RelatedDeclaredElement> GetRelatedDeclaredElements(IDeclaredElement element)
         {
             var uriIdentifier = element as IUriIdentifierDeclaredElement;
             if (uriIdentifier != null)
@@ -139,8 +139,8 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
                     }
                 }
 
-                Func<IDeclaration, Pair<IDeclaredElement, Predicate<FindResult>>> selector =
-                    e => new Pair<IDeclaredElement, Predicate<FindResult>>(e.DeclaredElement, JetPredicate<FindResult>.True);
+                Func<IDeclaration, RelatedDeclaredElement> selector =
+                    e => new RelatedDeclaredElement(e.DeclaredElement, JetPredicate<FindResult>.True);
                 if (actualDecalrations.Any())
                 {
                     return actualDecalrations.Cast<IDeclaration>().Select(selector);
@@ -152,7 +152,7 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
                 }
             }
 
-            return new[] { new Pair<IDeclaredElement, Predicate<FindResult>>(element, JetPredicate<FindResult>.True) };
+            return new[] { new RelatedDeclaredElement(element, JetPredicate<FindResult>.True) };
         }
 
         public bool IsCompatibleWithLanguage(PsiLanguageType languageType)

@@ -23,7 +23,7 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
 {
     internal class NTriplesReferenceSearcher : IDomainSpecificSearcher
     {
-        private readonly HashSet<IDeclaredElement> myElements;
+        private readonly IDeclaredElementsSet myElements;
         private readonly bool myHasUnnamedElement;
         private readonly HashSet<string> myNames;
         private readonly bool mySearchForLateBound;
@@ -32,7 +32,7 @@ namespace ReSharper.NTriples.Feature.Services.FindUsages
             IDomainSpecificSearcherFactory searchWordsProvider, IEnumerable<IDeclaredElement> elements, bool searchForLateBound)
         {
             this.mySearchForLateBound = searchForLateBound;
-            this.myElements = new HashSet<IDeclaredElement>(elements);
+            this.myElements = new DeclaredElementsSet(elements);
 
             this.myNames = new HashSet<string>();
             foreach (IDeclaredElement element in this.myElements)

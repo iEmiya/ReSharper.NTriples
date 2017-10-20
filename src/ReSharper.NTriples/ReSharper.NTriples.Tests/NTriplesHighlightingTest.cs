@@ -10,14 +10,15 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Metadata.Reader.API;
 using JetBrains.ProjectModel.Properties;
 using JetBrains.ProjectModel.Properties.Common;
-using JetBrains.ReSharper.Daemon.Test;
+using JetBrains.ReSharper.FeaturesTestFramework.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;
 using ReSharper.NTriples.Impl;
-using PlatformID = JetBrains.ProjectModel.PlatformID;
+using PlatformID = JetBrains.Application.platforms.PlatformID;
 
 namespace ReSharper.NTriples.Tests
 {
@@ -50,7 +51,7 @@ namespace ReSharper.NTriples.Tests
             }
         }
 
-        public override IProjectProperties GetProjectProperties(PlatformID platformId, ICollection<Guid> flavours)
+        public override IProjectProperties GetProjectProperties(PlatformID platformId, IReadOnlyCollection<TargetFrameworkId> targetFrameworkIds, ICollection<Guid> flavours)
         {
             return UnknownProjectPropertiesFactory.CreateUnknownProjectProperties(platformId);
         }

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Application;
 using JetBrains.Application.Progress;
+using JetBrains.Application.Threading;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers.impl;
 using JetBrains.ProjectModel;
@@ -22,6 +23,7 @@ using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.ReSharper.Psi.Util.Caches;
+using JetBrains.ReSharper.Resources.Shell;
 using JetBrains.Util;
 using ReSharper.NTriples.Impl;
 

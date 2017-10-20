@@ -10,8 +10,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems;
 using JetBrains.ReSharper.Feature.Services.LiveTemplates.Util;
-using JetBrains.ReSharper.Feature.Services.Lookup;
 
 namespace ReSharper.NTriples.Completion
 {

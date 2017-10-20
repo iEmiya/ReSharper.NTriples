@@ -10,16 +10,18 @@
 
 using System;
 using JetBrains.DataFlow;
-using JetBrains.DocumentModel;
+//using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Daemon.CaretDependentFeatures;
-using JetBrains.ReSharper.Feature.Services.Bulbs;
-using JetBrains.ReSharper.Feature.Services.ContextHighlighters;
+//using JetBrains.ReSharper.Feature.Services.Bulbs;
+using JetBrains.ReSharper.Feature.Services.ContextActions;
+//using JetBrains.ReSharper.Feature.Services.ContextHighlighters;
+using JetBrains.ReSharper.Feature.Services.Contexts;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Parsing;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using JetBrains.UI.RichText;
-using JetBrains.Util;
+//using JetBrains.Util;
 using ReSharper.NTriples.Parsing;
 
 namespace ReSharper.NTriples.Feature.Services.MatchingBrace

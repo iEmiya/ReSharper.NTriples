@@ -13,11 +13,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Application;
+using JetBrains.Application.UI.Utils;
 using JetBrains.DocumentModel;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Feature.Services.Goto;
-using JetBrains.ReSharper.Feature.Services.Navigation.Search;
-using JetBrains.ReSharper.Feature.Services.Occurences;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion;
+using JetBrains.ReSharper.Feature.Services.Navigation.Goto.Misc;
+using JetBrains.ReSharper.Feature.Services.Navigation.Goto.ProvidersAPI;
+using JetBrains.ReSharper.Feature.Services.Occurrences;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.Text;
@@ -33,7 +35,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
     public class NTriplesGotoSymbolProvider
         : //CachedGotoSymbolBase<NTriplesCache>,
             IGotoSymbolProvider,
-            IOccurenceNavigationProvider,
+            IOccurrenceNavigationProvider,
             //IChainedSymbolProvider,
             //IChainedSearchProvider,
             IApplicableGotoProvider
@@ -49,7 +51,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
 */
 
         public IEnumerable<MatchingInfo> FindMatchingInfos(
-            IdentifierMatcher matcher, INavigationScope scope, GotoContext gotoContext, Func<bool> checkCancelled)
+            IIdentifierMatcher matcher, INavigationScope scope, GotoContext gotoContext, Func<bool> checkCancelled)
         {
             var primaryMembersData = this.GetPrimaryMembers(scope.GetSolution());
 
@@ -69,12 +71,12 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
 
                 var matchingIndicies = matchedText.B
                                            ? matcher.MatchingIndicies(matchedText.A)
-                                           : EmptyArray<IdentifierMatch>.Instance;
+                                           : EmptyArray<CombinedLookupItem.IdentifierMatch>.Instance;
                 result.Add(
                     new MatchingInfo(
                         matchedText.A,
                         matcher.Filter == "*"
-                            ? EmptyList<IdentifierMatch>.InstanceList
+                            ? EmptyList<CombinedLookupItem.IdentifierMatch>.InstanceList
                             : matchingIndicies,
                         matchedText.B));
             }
@@ -83,7 +85,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             return result;
         }
 
-        public IEnumerable<IOccurence> GetOccurencesByMatchingInfo(
+        public IEnumerable<IOccurrence> GetOccurrencesByMatchingInfo(
             MatchingInfo navigationInfo, INavigationScope scope, GotoContext gotoContext, Func<bool> checkCancelled)
         {
             var fileMembersMap = gotoContext.GetData(NTriplesFileMembersMap.NTriplesFileMembersMapKey);
@@ -95,10 +97,10 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             var membersData = fileMembersMap[navigationInfo.Identifier];
             foreach (var clrFileMemberData in membersData)
             {
-                var occurence = this.CreateOccurence(clrFileMemberData);
-                if (occurence != null)
+                var occurrence = this.CreateOccurrence(clrFileMemberData);
+                if (occurrence != null)
                 {
-                    yield return occurence;
+                    yield return occurrence;
                 }
             }
             /*
@@ -111,13 +113,13 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
                 INamespace namespaceScope = namespaceNavigationScope.DeclaredElement as INamespace;
                 if (namespaceScope != null)
                 {
-                    return (IEnumerable<IOccurence>)EmptyList<IOccurence>.InstanceList;
+                    return (IEnumerable<IOccurrence>)EmptyList<IOccurrence>.InstanceList;
                 }
-                //return Enumerable.Select<IClrDeclaredElement, IOccurence>(Enumerable.Where<IClrDeclaredElement>(Enumerable.Where<IClrDeclaredElement>(ChainedScopesUtil.GetAllSubElements(namespaceScope, cache, true), (Func<IClrDeclaredElement, bool>)(element => element.ShortName == navigationInfo.Identifier)), new Func<IClrDeclaredElement, bool>(this.IsDeclaredElementVisible)), (Func<IClrDeclaredElement, IOccurence>)(x => (IOccurence)new ChainedCodeModelOccurence((IDeclaredElement)x, navigationInfo, OccurencePresentationOptions.DefaultOptions)));
+                //return Enumerable.Select<IClrDeclaredElement, IOccurrence>(Enumerable.Where<IClrDeclaredElement>(Enumerable.Where<IClrDeclaredElement>(ChainedScopesUtil.GetAllSubElements(namespaceScope, cache, true), (Func<IClrDeclaredElement, bool>)(element => element.ShortName == navigationInfo.Identifier)), new Func<IClrDeclaredElement, bool>(this.IsDeclaredElementVisible)), (Func<IClrDeclaredElement, IOccurrence>)(x => (IOccurrence)new ChainedCodeModelOccurrence((IDeclaredElement)x, navigationInfo, OccurrencePresentationOptions.DefaultOptions)));
             }
             if (!(scope is SolutionNavigationScope))
             {
-                return (IEnumerable<IOccurence>)EmptyList<IOccurence>.InstanceList;
+                return (IEnumerable<IOccurrence>)EmptyList<IOccurrence>.InstanceList;
             }
             List<IClrDeclaredElement> list1 = new List<IClrDeclaredElement>();
             foreach (ITypeMember typeMember in cache.GetSourceMembers(navigationInfo.Identifier))
@@ -137,18 +139,18 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             }
             IClrDeclaredElement[] elementsByShortName = cache.GetElementsByShortName(navigationInfo.Identifier);
             return
-                Enumerable.Select<IClrDeclaredElement, IOccurence>(
+                Enumerable.Select<IClrDeclaredElement, IOccurrence>(
                     Enumerable.Where<IClrDeclaredElement>(
                         Enumerable.Concat<IClrDeclaredElement>(
                             CollectionUtil.Concat<IClrDeclaredElement>(
                                 (IEnumerable<IClrDeclaredElement>)list1, elementsByShortName),
                             (IEnumerable<IClrDeclaredElement>)list2),
                         new Func<IClrDeclaredElement, bool>(this.IsDeclaredElementVisible)),
-                    (Func<IClrDeclaredElement, IOccurence>)
-                    (x => (IOccurence)new DeclaredElementOccurence((IDeclaredElement)x, OccurenceType.Occurence)));*/
+                    (Func<IClrDeclaredElement, IOccurrence>)
+                    (x => (IOccurrence)new DeclaredElementOccurrence((IDeclaredElement)x, OccurrenceType.Occurrence)));*/
         }
 
-        public bool IsApplicable(INavigationScope scope, GotoContext gotoContext, IdentifierMatcher matcher)
+        public bool IsApplicable(INavigationScope scope, GotoContext gotoContext, IIdentifierMatcher matcher)
         {
             if (!(scope is SolutionNavigationScope))
             {
@@ -158,7 +160,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             return true;
         }
 
-        protected IOccurence CreateOccurence(NTriplesFileMemberData fileMemberData)
+        protected IOccurrence CreateOccurrence(NTriplesFileMemberData fileMemberData)
         {
             var localName = fileMemberData.Element as LocalName;
             if (localName != null)
@@ -166,9 +168,9 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
                 localName.ScopeToMainFile = true;
             }
 
-            var declaredElementOccurence = new DeclaredElementOccurence(
+            var declaredElementOccurrence = new DeclaredElementOccurrence(
                 fileMemberData.Element,
-                new OccurencePresentationOptions
+                new OccurrencePresentationOptions
                     {
                         ContainerStyle = !(fileMemberData.Element is ITypeElement)
                                              ? fileMemberData.ContainerDisplayStyle
@@ -181,7 +183,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
                 localName.ScopeToMainFile = false;
             }
 
-            return declaredElementOccurence;
+            return declaredElementOccurrence;
         }
 
         protected NTriplesCache GetCache(ISolution solution)

@@ -9,7 +9,7 @@
 // ***********************************************************************
 
 using System;
-using JetBrains.Application;
+using JetBrains.Application.Threading;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Parsing;

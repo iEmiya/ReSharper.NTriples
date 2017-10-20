@@ -8,29 +8,25 @@
 // </summary>
 // ***********************************************************************
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Feature.Services.CodeCompletion;
-using JetBrains.ReSharper.Feature.Services.CodeCompletion.Impl;
 using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure;
-using JetBrains.ReSharper.Feature.Services.Lookup;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems.Impl;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Resolve;
-using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.Util;
 using ReSharper.NTriples.Impl;
-using ReSharper.NTriples.Impl.Tree;
-using ReSharper.NTriples.Resolve;
-using ReSharper.NTriples.Tree;
 
 namespace ReSharper.NTriples.Completion
 {
     [Language(typeof(NTriplesLanguage))]
     internal class NTriplesCodeCompletionItemsProvider : ItemsProviderOfSpecificContext<NTriplesCodeCompletionContext>
     {
+        /*/
+        protected override void AddItemsGroups(
+            NTriplesCodeCompletionContext context, GroupedItemsCollector collector, IntellisenseManager intellisenseManager)
+        //*/
         protected override void AddItemsGroups(
             NTriplesCodeCompletionContext context, GroupedItemsCollector collector, IntellisenseManager intellisenseManager)
         {
@@ -41,7 +37,8 @@ namespace ReSharper.NTriples.Completion
             collector.AddFilter(new ReferencesBetterFilter());
         }
 
-        protected override bool AddLookupItems(NTriplesCodeCompletionContext context, GroupedItemsCollector collector)
+        //protected override bool AddLookupItems(NTriplesCodeCompletionContext context, GroupedItemsCollector collector)
+        protected override bool AddLookupItems(NTriplesCodeCompletionContext context, IItemsCollector collector)
         {
             IReference reference = context.ReparsedContext.Reference;
             if (reference == null)

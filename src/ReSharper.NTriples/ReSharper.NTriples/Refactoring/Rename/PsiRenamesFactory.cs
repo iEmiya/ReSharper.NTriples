@@ -9,9 +9,9 @@
 // ***********************************************************************
 
 using System.Collections.Generic;
+using JetBrains.Application;
+using JetBrains.ReSharper.Feature.Services.Refactorings.Specific.Rename;
 using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Refactorings.Rename;
-using JetBrains.ReSharper.Refactorings.RenameModel;
 using ReSharper.NTriples.Impl;
 
 namespace ReSharper.NTriples.Refactoring.Rename

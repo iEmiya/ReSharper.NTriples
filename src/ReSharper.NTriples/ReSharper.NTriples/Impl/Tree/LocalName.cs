@@ -26,7 +26,7 @@ namespace ReSharper.NTriples.Impl.Tree
         private readonly IList<IPsiSourceFile> filesScope = new List<IPsiSourceFile>();
         private NTriplesLocalNameReference myLocalNameReference;
 
-        public bool CaseSensistiveName
+        public bool CaseSensitiveName
         {
             get
             {

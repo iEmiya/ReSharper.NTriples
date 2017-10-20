@@ -14,18 +14,13 @@ using JetBrains.Annotations;
 using JetBrains.Application;
 using JetBrains.Application.Progress;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.Feature.Services.Refactorings;
+using JetBrains.ReSharper.Feature.Services.Refactorings.Specific.Rename;
 using JetBrains.ReSharper.Feature.Services.Util;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Pointers;
 using JetBrains.ReSharper.Psi.Resolve;
 using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.ReSharper.Refactorings;
-using JetBrains.ReSharper.Refactorings.Conflicts;
-using JetBrains.ReSharper.Refactorings.Conflicts.New;
-using JetBrains.ReSharper.Refactorings.Rename;
-using JetBrains.ReSharper.Refactorings.RenameModel;
-using JetBrains.ReSharper.Refactorings.Util;
-using JetBrains.ReSharper.Refactorings.Workflow;
 using JetBrains.Util;
 using ReSharper.NTriples.Cache;
 using ReSharper.NTriples.Impl;
@@ -101,7 +96,7 @@ namespace ReSharper.NTriples.Refactoring.Rename
         }
 
         public override void Rename(
-            RenameRefactoring executer, IProgressIndicator pi, bool hasConflictsWithDeclarations, IRefactoringDriver driver)
+            IRenameRefactoring executer, IProgressIndicator pi, bool hasConflictsWithDeclarations, IRefactoringDriver driver)
         {
             this.BuildDeclarations();
 
@@ -231,7 +226,7 @@ namespace ReSharper.NTriples.Refactoring.Rename
             }
         }
 
-        private static DeclaredElementInstance GetSubst(IDeclaredElement element, RenameRefactoring executer)
+        private static DeclaredElementInstance GetSubst(IDeclaredElement element, IRenameRefactoring executer)
         {
             return executer.Workflow.LanguageSpecific[element.PresentationLanguage].GetSubst(element);
         }

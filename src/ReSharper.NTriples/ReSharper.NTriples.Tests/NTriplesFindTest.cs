@@ -8,7 +8,7 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.ReSharper.Psi.Find.Test;
+//using JetBrains.ReSharper.Psi.Find.Test;
 using JetBrains.ReSharper.Psi.Search;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;

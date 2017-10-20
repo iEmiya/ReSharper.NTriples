@@ -12,26 +12,31 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+//using System.Text;
 using JetBrains.Annotations;
 using JetBrains.Application;
-using JetBrains.CommonControls;
-using JetBrains.IDE;
-using JetBrains.ProjectModel;
-using JetBrains.ProjectModel.Model2.Assemblies.Interfaces;
-using JetBrains.ReSharper.Feature.Services.Goto;
-using JetBrains.ReSharper.Feature.Services.Navigation;
-using JetBrains.ReSharper.Feature.Services.Navigation.Search;
-using JetBrains.ReSharper.Feature.Services.Occurences;
+using JetBrains.Application.UI.Utils;
+//using JetBrains.CommonControls;
+//using JetBrains.IDE;
+//using JetBrains.ProjectModel;
+//using JetBrains.ProjectModel.Model2.Assemblies.Interfaces;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion;
+//using JetBrains.ReSharper.Feature.Services.Goto;
+//using JetBrains.ReSharper.Feature.Services.Navigation;
+using JetBrains.ReSharper.Feature.Services.Navigation.Goto.Misc;
+using JetBrains.ReSharper.Feature.Services.Navigation.Goto.ProvidersAPI;
+//using JetBrains.ReSharper.Feature.Services.Navigation.Search;
+//using JetBrains.ReSharper.Feature.Services.Occurences;
+using JetBrains.ReSharper.Feature.Services.Occurrences;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
-using JetBrains.ReSharper.Psi.Search;
+//using JetBrains.ReSharper.Psi.Search;
 using JetBrains.Text;
-using JetBrains.UI.PopupWindowManager;
-using JetBrains.UI.RichText;
+//using JetBrains.UI.PopupWindowManager;
+//using JetBrains.UI.RichText;
 using JetBrains.Util;
 using ReSharper.NTriples.Cache;
-using ReSharper.NTriples.Impl;
+//using ReSharper.NTriples.Impl;
 using ReSharper.NTriples.Impl.Tree;
 using ReSharper.NTriples.Resolve;
 
@@ -41,7 +46,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
     public class NTriplesGotoFileMemberProvider : IGotoFileMemberProvider
     {
         [CanBeNull]
-        protected IOccurence CreateOccurence(NTriplesFileMemberData fileMemberData)
+        protected IOccurrence CreateOccurrence(NTriplesFileMemberData fileMemberData)
         {
             var localName = fileMemberData.Element as LocalName;
             if (localName != null)
@@ -49,9 +54,9 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
                 localName.ScopeToMainFile = true;
             }
 
-            var declaredElementOccurence = new DeclaredElementOccurence(
+            var declaredElementOccurrence = new DeclaredElementOccurrence(
                 fileMemberData.Element,
-                new OccurencePresentationOptions
+                new OccurrencePresentationOptions
                     {
                         ContainerStyle = !(fileMemberData.Element is ITypeElement)
                                              ? fileMemberData.ContainerDisplayStyle
@@ -65,7 +70,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
                 localName.ScopeToMainFile = false;
             }
 
-            return declaredElementOccurence;
+            return declaredElementOccurrence;
         }
 
         protected virtual bool IsSourceFileAvailable(IPsiSourceFile sourceFile)
@@ -107,13 +112,13 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             return new[] { JetTuple.Of(declaredElement.ShortName, true) };
         }
 
-        public bool IsApplicable(INavigationScope scope, GotoContext gotoContext, IdentifierMatcher matcher)
+        public bool IsApplicable(INavigationScope scope, GotoContext gotoContext, IIdentifierMatcher matcher)
         {
             return true;
         }
 
         public IEnumerable<MatchingInfo> FindMatchingInfos(
-            IdentifierMatcher matcher,
+            IIdentifierMatcher matcher,
             INavigationScope scope,
             GotoContext gotoContext,
             Func<bool> checkCancelled)
@@ -142,12 +147,12 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
 
                 var matchingIndicies = matchedText.B
                     ? matcher.MatchingIndicies(matchedText.A)
-                    : EmptyArray<IdentifierMatch>.Instance;
+                    : EmptyArray<CombinedLookupItem.IdentifierMatch>.Instance;
                 result.Add(
                     new MatchingInfo(
                         matchedText.A,
                         matcher.Filter == "*"
-                            ? EmptyList<IdentifierMatch>.InstanceList
+                            ? EmptyList<CombinedLookupItem.IdentifierMatch>.InstanceList
                             : matchingIndicies,
                         matchedText.B));
             }
@@ -156,7 +161,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             return result;
         }
 
-        public IEnumerable<IOccurence> GetOccurencesByMatchingInfo(
+        public IEnumerable<IOccurrence> GetOccurrencesByMatchingInfo(
             MatchingInfo navigationInfo,
             INavigationScope scope,
             GotoContext gotoContext,
@@ -171,7 +176,7 @@ namespace ReSharper.NTriples.Feature.Finding.GotoMember
             var membersData = fileMembersMap[navigationInfo.Identifier];
             foreach (var clrFileMemberData in membersData)
             {
-                var occurence = this.CreateOccurence(clrFileMemberData);
+                var occurence = this.CreateOccurrence(clrFileMemberData);
                 if (occurence != null)
                 {
                     yield return occurence;

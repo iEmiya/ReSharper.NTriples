@@ -8,7 +8,7 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.ReSharper.IntentionsTests;
+using JetBrains.ReSharper.FeaturesTestFramework.Intentions;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;
 using ReSharper.NTriples.Impl;

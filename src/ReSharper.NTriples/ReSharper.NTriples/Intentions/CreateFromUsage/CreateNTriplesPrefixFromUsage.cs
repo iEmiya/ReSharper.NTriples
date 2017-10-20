@@ -10,15 +10,12 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Feature.Services.Bulbs;
-using JetBrains.ReSharper.Feature.Services.Intentions.DataProviders;
+using JetBrains.ReSharper.Feature.Services.Intentions;
+using JetBrains.ReSharper.Feature.Services.QuickFixes;
 using JetBrains.ReSharper.Intentions.CreateFromUsage;
-using JetBrains.ReSharper.Intentions.Extensibility;
-using JetBrains.ReSharper.Intentions.Extensibility.Menu;
+using JetBrains.ReSharper.Psi.Util;
 using JetBrains.Util;
-using JetBrains.Util.Lazy;
 using ReSharper.NTriples.CodeInspections.Highlightings;
 using ReSharper.NTriples.Resolve;
 
@@ -46,7 +43,7 @@ namespace ReSharper.NTriples.Intentions.CreateFromUsage
 
         IEnumerable<IntentionAction> IQuickFix.CreateBulbItems()
         {
-            return CreateBulbActions().ToQuickFixAction();
+            return CreateBulbActions().ToContextActionIntentions();
         }
 
         public bool IsAvailable(IUserDataHolder cache)

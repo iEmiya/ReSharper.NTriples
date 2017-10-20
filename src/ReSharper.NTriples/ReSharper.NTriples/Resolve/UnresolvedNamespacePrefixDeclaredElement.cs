@@ -31,7 +31,7 @@ namespace ReSharper.NTriples.Resolve
             this.myServices = services;
         }
 
-        public bool CaseSensistiveName
+        public bool CaseSensitiveName
         {
             get
             {

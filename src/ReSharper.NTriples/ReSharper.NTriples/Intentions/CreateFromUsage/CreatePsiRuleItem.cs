@@ -12,10 +12,10 @@ using System;
 using JetBrains.Application.Progress;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Feature.Services.Intentions;
-using JetBrains.ReSharper.Feature.Services.Intentions.DataProviders;
 using JetBrains.ReSharper.Intentions.CreateFromUsage;
-using JetBrains.ReSharper.Intentions.Util;
+using JetBrains.ReSharper.Intentions.Legacy;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.Util;
 using JetBrains.TextControl;
 using JetBrains.Util;
 
@@ -25,7 +25,7 @@ namespace ReSharper.NTriples.Intentions.CreateFromUsage
     {
         private readonly string myFormatText;
 
-        public CreatePsiRuleItem(JetBrains.Util.Lazy.Lazy<CreateNTriplesPrefixContext> context, string format)
+        public CreatePsiRuleItem(Lazy<CreateNTriplesPrefixContext> context, string format)
             : base(context)
         {
             this.myFormatText = format;

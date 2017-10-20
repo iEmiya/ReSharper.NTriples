@@ -11,7 +11,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using JetBrains.ReSharper.Feature.Services.Tests.CSharp.FeatureServices.CodeCompletion;
+//using JetBrains.ReSharper.Feature.Services.Tests.CSharp.FeatureServices.CodeCompletion;
+using JetBrains.ReSharper.FeaturesTestFramework.Completion;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;
 using ReSharper.NTriples.Impl;

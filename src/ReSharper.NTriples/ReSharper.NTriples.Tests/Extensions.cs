@@ -10,7 +10,7 @@
 
 using System.IO;
 using System.Linq;
-using JetBrains.Application.Test;
+using JetBrains.TestFramework;
 using ReSharper.NTriples.Impl;
 
 namespace ReSharper.NTriples.Tests

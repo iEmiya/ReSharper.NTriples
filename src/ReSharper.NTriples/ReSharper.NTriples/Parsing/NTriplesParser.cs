@@ -9,6 +9,7 @@
 // ***********************************************************************
 
 using JetBrains.Application;
+using JetBrains.Application.Threading;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Parsing;
@@ -31,7 +32,7 @@ namespace ReSharper.NTriples.Parsing
             this.commonIdentifierIntern = commonIdentifierIntern;
             this.originalLexer = lexer;
             this.myCheckForInterrupt = new SeldomInterruptChecker();
-            this.setLexer(new NTriplesFilteringLexer(lexer));
+            this.SetLexer(new NTriplesFilteringLexer(lexer));
         }
 
         public IFile ParseFile()
@@ -315,7 +316,7 @@ namespace ReSharper.NTriples.Parsing
             return result;
         }
 
-        protected override TreeElement createToken()
+        protected override TreeElement CreateToken()
         {
             LeafElementBase element = TreeElementFactory.CreateLeafElement(
                 this.myLexer.TokenType, this.myLexer.Buffer, this.myLexer.TokenStart, this.myLexer.TokenEnd);

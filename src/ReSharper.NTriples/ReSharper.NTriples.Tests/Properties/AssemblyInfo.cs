@@ -11,7 +11,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using JetBrains.Application;
+using JetBrains.Application.Infra;
 using JetBrains.ReSharper;
+using JetBrains.ReSharper.Resources.Shell;
 using JetBrains.Threading;
 using NUnit.Framework;
 using ReSharper.NTriples.Impl;

@@ -8,7 +8,7 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.ReSharper.Feature.Services.Intentions.DataProviders;
+using JetBrains.ReSharper.Psi.Util;
 using ReSharper.NTriples.Tree;
 
 namespace ReSharper.NTriples.Intentions

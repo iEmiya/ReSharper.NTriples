@@ -10,8 +10,8 @@
 
 using System.Collections.Generic;
 using JetBrains.Application.Settings;
-using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.UsageChecking;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 using JetBrains.Util;
 
 namespace ReSharper.NTriples.CodeInspections

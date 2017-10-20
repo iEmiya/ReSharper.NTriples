@@ -19,6 +19,7 @@ using ReSharper.NTriples.CodeInspections.Highlightings;
 using ReSharper.NTriples.Impl;
 using ReSharper.NTriples.Tree;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 
 namespace ReSharper.NTriples.CodeInspections
 {
@@ -97,8 +98,8 @@ namespace ReSharper.NTriples.CodeInspections
                 return;
             }
 
-            var occurences = cache.GetPrefixDeclarationSymbols(prefixName).Count(s => s.SourceFile.Equals(sourceFile));
-            if (occurences > 1)
+            var occurrences = cache.GetPrefixDeclarationSymbols(prefixName).Count(s => s.SourceFile.Equals(sourceFile));
+            if (occurrences > 1)
             {
                 this.AddWarnHighlighting(consumer, string.Format("The prefix '{0}' is already declared", prefixName), prefixDeclarationParam.PrefixName);
             }

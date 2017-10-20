@@ -8,7 +8,7 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.ReSharper.Feature.Services.Bulbs;
+using JetBrains.ReSharper.Feature.Services.ContextActions;
 using ReSharper.NTriples.Tree;
 
 namespace ReSharper.NTriples.Feature.Services.MatchingBrace

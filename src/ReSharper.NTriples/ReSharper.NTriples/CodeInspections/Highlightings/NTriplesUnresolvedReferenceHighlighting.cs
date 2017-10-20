@@ -11,6 +11,7 @@
 using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.Impl;
+using JetBrains.ReSharper.Feature.Services.Daemon;
 using ReSharper.NTriples.Impl;
 using ReSharper.NTriples.Tree;
 

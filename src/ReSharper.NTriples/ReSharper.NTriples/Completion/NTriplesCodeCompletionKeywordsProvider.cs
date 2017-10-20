@@ -13,6 +13,8 @@ using System.Linq;
 using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Feature.Services.CodeCompletion;
 using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems;
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems.Impl;
 using JetBrains.ReSharper.Feature.Services.Lookup;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Tree;
@@ -26,6 +28,10 @@ namespace ReSharper.NTriples.Completion
     [Language(typeof(NTriplesLanguage))]
     public class NTriplesCodeCompletionKeywordsProvider : ItemsProviderOfSpecificContext<NTriplesCodeCompletionContext>
     {
+        /*/
+        protected override void AddItemsGroups(
+            NTriplesCodeCompletionContext context, GroupedItemsCollector collector, IntellisenseManager intellisenseManager)
+        //*/
         protected override void AddItemsGroups(
             NTriplesCodeCompletionContext context, GroupedItemsCollector collector, IntellisenseManager intellisenseManager)
         {
@@ -33,7 +39,8 @@ namespace ReSharper.NTriples.Completion
             collector.AddFilter(new KeywordsBetterFilter());
         }
 
-        protected override bool AddLookupItems(NTriplesCodeCompletionContext context, GroupedItemsCollector collector)
+        //protected override bool AddLookupItems(NTriplesCodeCompletionContext context, GroupedItemsCollector collector)
+        protected override bool AddLookupItems(NTriplesCodeCompletionContext context, IItemsCollector collector)
         {
             var psiFile = context.BasicContext.File as INTriplesFile;
             if (psiFile == null)

@@ -10,7 +10,7 @@
 
 using System.IO;
 using System.Linq;
-using JetBrains.ReSharper.PsiTests.parsing;
+//using JetBrains.ReSharper.PsiTests.parsing;
 using JetBrains.ReSharper.TestFramework;
 using NUnit.Framework;
 using ReSharper.NTriples.Impl;

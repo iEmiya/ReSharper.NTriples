@@ -11,8 +11,8 @@
 using System.Diagnostics;
 using JetBrains.DocumentModel;
 using JetBrains.ReSharper.Feature.Services.Intentions.CreateDeclaration;
-using JetBrains.ReSharper.Feature.Services.Intentions.DataProviders;
 using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.ReSharper.Psi.Util;
 using ReSharper.NTriples.Tree;
 
 namespace ReSharper.NTriples.Intentions.CreateFromUsage

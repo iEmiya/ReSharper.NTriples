@@ -8,7 +8,7 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.ReSharper.Feature.Services.Occurences;
+using JetBrains.ReSharper.Feature.Services.Occurrences;
 using JetBrains.ReSharper.Psi;
 
 namespace ReSharper.NTriples.Feature.Finding.GotoMember

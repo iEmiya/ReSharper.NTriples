@@ -8,12 +8,15 @@
 // </summary>
 // ***********************************************************************
 
-using JetBrains.Application;
+//using JetBrains.Application;
+using JetBrains.Application.Threading;
 using JetBrains.DataFlow;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Daemon.Bulbs;
-using JetBrains.ReSharper.Daemon.CaretDependentFeatures;
-using JetBrains.ReSharper.Feature.Services.Bulbs;
+//using JetBrains.ReSharper.Daemon.Bulbs;
+//using JetBrains.ReSharper.Daemon.CaretDependentFeatures;
+//using JetBrains.ReSharper.Feature.Services.Bulbs;
+using JetBrains.ReSharper.Feature.Services.ContextActions;
+using JetBrains.ReSharper.Feature.Services.Contexts;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;

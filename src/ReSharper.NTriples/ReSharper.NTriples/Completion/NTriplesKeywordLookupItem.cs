@@ -8,6 +8,7 @@
 // </summary>
 // ***********************************************************************
 
+using JetBrains.ReSharper.Feature.Services.CodeCompletion.Infrastructure.LookupItems.Impl;
 using JetBrains.ReSharper.Feature.Services.Lookup;
 using JetBrains.UI.Icons;
 using JetBrains.UI.RichText;
